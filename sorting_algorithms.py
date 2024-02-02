@@ -1,3 +1,15 @@
+'''
+    Sorting Algorithms Used :
+    1. Bubble Sort
+    2. Selection Sort
+    3. Merge Sort
+    4. Quick Sort
+    5. Heap Sort
+    6. Radix Sort
+    7. Insertion Sort
+'''
+
+# Bubbkle Sort
 def bubble_sort(arr):
     n = len(arr)
     for i in range(n - 1):
@@ -5,7 +17,8 @@ def bubble_sort(arr):
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
     return arr
-
+#=========================================================================
+# Selection Sort
 def selection_sort(arr):
     n = len(arr)
     for i in range(n):
@@ -16,6 +29,8 @@ def selection_sort(arr):
         arr[i], arr[min_index] = arr[min_index], arr[i]
     return arr
 
+#=========================================================================
+# Insertion Sort
 def insertion_sort(arr):
     n = len(arr)
     for i in range(1, n):
@@ -27,6 +42,8 @@ def insertion_sort(arr):
         arr[j + 1] = key
     return arr
 
+#=========================================================================
+# Merge Sort
 def merge_sort(arr):
     if len(arr) > 1:
         mid = len(arr) // 2
@@ -59,7 +76,7 @@ def merge_sort(arr):
 
     return arr
 
-
+#=========================================================================
 # Quick sort 
 def partition(array, low, high):
 
@@ -81,6 +98,8 @@ def quick_sort(array, low, high):
     quick_sort(array, pi + 1, high)
 
 
+#=========================================================================
+# Heap Sort
 def heapify(arr, n, i):
     largest = i
     left = 2 * i + 1
@@ -108,6 +127,7 @@ def heap_sort(arr):
     
     return arr
 
+#=========================================================================
 #Radix Sort
 def counting_sort(arr, exp):
     n = len(arr)
