@@ -95,10 +95,12 @@ class SortingApp:
             mb.showerror("Invalid Input", "Please enter a valid integer for the array size.")
 
     def run_algorithms(self):
-
-        array_values = [int(val.strip()) for val in self.array_entry.get().split(',')]
-
-    
+        # Get user inputs
+        input_values = self.array_entry.get().split(',')
+        array_values = [int(input_values[0].strip())]  # Store the first value
+        array_values.extend([int(val.strip()) for val in input_values[1:] if int(val.strip()) < 0])
+        
+        # Store selected algorithms
         selected_algorithms = {
             'Bubble Sort': self.bubble_sort_var.get(),
             'Selection Sort': self.selection_sort_var.get(),
