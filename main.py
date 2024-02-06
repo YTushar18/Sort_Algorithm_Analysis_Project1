@@ -14,7 +14,7 @@ class SortingApp:
         self.root = root
         self.root.title("Sorting Algorithm Analysis")
 
-        # Create frames for user inputs and graph display
+        # Frames for Input
         self.input_frame = ttk.Frame(root)
         self.graph_frame = ttk.Frame(root)
 
@@ -24,7 +24,6 @@ class SortingApp:
         self.array_entry = ttk.Entry(self.input_frame)
         self.algorithm_label = ttk.Label(self.input_frame, text="Select Sorting Algorithms:")
 
-        # Variables to store checkbox states
         self.bubble_sort_var = tk.IntVar()
         self.selection_sort_var = tk.IntVar()
         self.insertion_sort_var = tk.IntVar()
@@ -33,7 +32,7 @@ class SortingApp:
         self.heap_sort_var = tk.IntVar()
         self.radix_sort_var = tk.IntVar()
 
-        # Checkboxes for selecting sorting algorithms
+        # Checkboxes
         self.bubble_sort_checkbox = ttk.Checkbutton(self.input_frame, text="Bubble Sort", variable=self.bubble_sort_var)
         self.selection_sort_checkbox = ttk.Checkbutton(self.input_frame, text="Selection Sort", variable=self.selection_sort_var)
         self.insertion_sort_checkbox = ttk.Checkbutton(self.input_frame, text="Insertion Sort", variable=self.insertion_sort_var)
@@ -42,13 +41,10 @@ class SortingApp:
         self.heap_sort_checkbox = ttk.Checkbutton(self.input_frame, text="Heap Sort", variable=self.heap_sort_var)
         self.radix_sort_checkbox = ttk.Checkbutton(self.input_frame, text="Radix Sort", variable=self.radix_sort_var)
 
-        # Button to run sorting algorithms
-        self.run_button = ttk.Button(self.input_frame, text="Run", command=self.run_algorithms)
+        self.run_button = ttk.Button(self.input_frame, text="Run", command=self.run_algorithms)         # Button to run sorting algorithms
 
-        # Create a Matplotlib figure for displaying the graph
         self.fig, self.ax = plt.subplots()
 
-        # Display the initial empty plot
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.graph_frame)
 
         # Pack UI Elements in the input frame
@@ -66,51 +62,43 @@ class SortingApp:
         self.radix_sort_checkbox.grid(row=3, column=6, padx=60, pady=5, sticky="w")
         self.run_button.grid(row=4, column=0, columnspan=8, pady=10)
 
-        # Pack the input frame at the top
-        self.input_frame.pack(side="top", fill="x", padx=10, pady=10)
+        self.input_frame.pack(side="top", fill="x", padx=10, pady=10) # Pack the input frame at the top
 
-        # Configure the grid for the graph in the graph frame
-        self.canvas.get_tk_widget().grid(row=0, column=0, rowspan=3, columnspan=2, padx=5, pady=5, sticky="nsew")
+        self.canvas.get_tk_widget().grid(row=0, column=0, rowspan=3, columnspan=2, padx=5, pady=5, sticky="nsew") # Configure the grid for the graph in the graph frame
         self.canvas.draw()
 
-        # Pack the graph frame at the bottom
-        self.graph_frame.pack(side="bottom", fill="both", expand=True)
+        self.graph_frame.pack(side="bottom", fill="both", expand=True) # Pack the graph frame at the bottom
 
-        # Set a fixed size for the Tkinter window
         root.geometry("1920x1080")  # Adjust the size as needed
 
-        # Configure the column to expand horizontally
-        root.grid_columnconfigure(0, weight=1)
+        root.grid_columnconfigure(0, weight=1) # Configure the column to expand horizontally
 
-        # Set a fixed size for the graph frame
         self.graph_frame.grid_propagate(False)
-        self.graph_frame.grid_rowconfigure(0, weight=1)  # Ensure that the frame expands vertically
-        self.graph_frame.grid_columnconfigure(0, weight=1)  # Ensure that the frame expands horizontally
+        self.graph_frame.grid_rowconfigure(0, weight=1)  # frame expands vertically
+        self.graph_frame.grid_columnconfigure(0, weight=1)  # frame expands horizontally
 
     def generate_random_array(self):
         try:
-            # Prompt the user to enter the size of the array
-            size = sd.askinteger("Random Array Size", "Enter the size of the array:")
+            size = sd.askinteger("Random Array Size", "Enter the size of the array:") # Prompt the user to enter the size of the array
 
-            # Check if the user pressed cancel
-            if size is None:
+            if size is None: # Check if the user pressed cancel
                 return
 
-            # Generate a random array of the specified size
-            random_array = [random.randint(1, 100) for _ in range(size)]
+            
+            random_array = [random.randint(1, 100) for _ in range(size)] # Generate a random array of the specified size
 
-            # Fill the array entry with the generated array
-            self.array_entry.delete(0, tk.END)
+            
+            self.array_entry.delete(0, tk.END) # Fill the array entry with the generated array
             self.array_entry.insert(0, ', '.join(map(str, random_array)))
 
         except ValueError:
             mb.showerror("Invalid Input", "Please enter a valid integer for the array size.")
 
     def run_algorithms(self):
-        # Get user inputs
+
         array_values = [int(val.strip()) for val in self.array_entry.get().split(',')]
 
-        # Store selected algorithms
+    
         selected_algorithms = {
             'Bubble Sort': self.bubble_sort_var.get(),
             'Selection Sort': self.selection_sort_var.get(),
@@ -121,7 +109,7 @@ class SortingApp:
             'Radix Sort': self.radix_sort_var.get()
         }
 
-        # Run selected algorithms and measure runtime
+
         algorithm_runtimes = {}
         
         if selected_algorithms['Bubble Sort']:
@@ -139,36 +127,35 @@ class SortingApp:
         if selected_algorithms['Radix Sort']:
             algorithm_runtimes['Radix Sort'] = measure_runtime(radix_sort, array_values.copy(), 0)
 
-        # Display the graph
         self.display_graph(algorithm_runtimes)
 
     def display_graph(self, algorithm_runtimes):
-        # Clear the existing graph
-        self.ax.clear()
+        
+        self.ax.clear() # Clear the existing graph
 
-        # Extract algorithm names and runtimes
-        algorithms = list(algorithm_runtimes.keys())
+        
+        algorithms = list(algorithm_runtimes.keys()) # Extract algorithm names and runtimes
         runtimes = [runtime[0] for runtime in algorithm_runtimes.values()]
 
-        # Set colors for the bars
-        colors = ['cyan', 'lightblue', 'lightgreen', 'tan', 'royalblue', 'sandybrown', 'salmon']
+        
+        colors = ['cyan', 'lightblue', 'lightgreen', 'tan', 'royalblue', 'sandybrown', 'salmon'] # Set colors for the bars
 
-        # Create a bar graph
-        self.ax.bar(algorithms, runtimes, color=colors[:len(algorithms)])
+        
+        self.ax.bar(algorithms, runtimes, color=colors[:len(algorithms)],edgecolor='black', linewidth=1) # Create a bar graph
         self.ax.set_xlabel('Sorting Algorithms')
-        self.ax.set_ylabel('Runtime (millisecond)')
+        self.ax.set_ylabel('Runtime')
         self.ax.set_title('Sorting Algorithm Runtimes')
 
-        # Adjust x-axis label formatting if there are more than 3 algorithms
-        if len(algorithms) > 3:
+       
+        if len(algorithms) > 3:  # Adjust x-axis label formatting if there are more than 3 algorithms
             for label in self.ax.get_xticklabels():
                 label.set_fontsize(6)  # Adjust font size as needed
 
-        # Redraw the updated plot in the Tkinter window
+        
         self.canvas.draw()
 
 def measure_runtime(sorting_function, array, flag):
-    # Measure the runtime of a sorting algorithm
+    
     start_time = datetime.now()
     if flag == 1:
         sorting_function(array, 0, len(array) - 1)
