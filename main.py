@@ -113,16 +113,34 @@ class SortingApp:
         except ValueError:
             mb.showerror("Invalid Input", "Please enter a valid integer for the k value.")
 
+    def convert_to_numbers(self,input_array):
+        converted_array = []
+        for x in input_array:
+            try:
+                converted = float(x)
+                if converted.is_integer(): 
+                    converted = int(converted)
+                converted_array.append(converted)
+            except ValueError:
+                converted_array.append(x)
+        return converted_array
+
+    def check_int(self,array):
+        for value in array:
+            if not isinstance(value, (int)):
+                return False
+        return True
 
     def run_algorithms(self):
-        # Get user inputs
 
-        array_values = [int(val.strip()) for val in self.array_entry.get().split(',')]
+        # reading input from the ui and converting int to int and float to float
+        array_values = self.convert_to_numbers([val for val in self.array_entry.get().split(',')])
 
-        # input_values = self.array_entry.get().split(',')
-        # array_values = [int(input_values[0].strip())]  # Store the first value
-        # array_values.extend([int(val.strip()) for val in input_values[1:] if int(val.strip()) < 0])
-        
+        # input validation for int
+        if not self.check_int(array_values):
+            mb.showerror("Invalid Input", "Please enter a valid Integer for the Array!")
+
+        #input validation for k value for quick selection sort algorithm
         self.array_temp = array_values
         if self.k_value:
             if self.k_value < 1 or self.k_value > len(array_values):
