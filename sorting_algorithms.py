@@ -1,12 +1,13 @@
 '''
     Sorting Algorithms Used :
-    1. Bubble Sort
-    2. Selection Sort
-    3. Merge Sort
-    4. Quick Sort
-    5. Heap Sort
-    6. Radix Sort
-    7. Insertion Sort
+    1. Bubble Sort -
+    2. Counting Sort -
+    3. Bucket Sort -
+    4. Quick Sort -
+    5. Heap Sort -
+    6. Radix Sort -
+    7. Insertion Sort -
+    8. Quick Select -
 '''
 
 # Bubbkle Sort
@@ -17,17 +18,18 @@ def bubble_sort(arr):
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
     return arr
+
 #=========================================================================
 # Selection Sort
-def selection_sort(arr):
-    n = len(arr)
-    for i in range(n):
-        min_index = i
-        for j in range(i + 1, n):
-            if arr[j] < arr[min_index]:
-                min_index = j
-        arr[i], arr[min_index] = arr[min_index], arr[i]
-    return arr
+# def selection_sort(arr):
+#     n = len(arr)
+#     for i in range(n):
+#         min_index = i
+#         for j in range(i + 1, n):
+#             if arr[j] < arr[min_index]:
+#                 min_index = j
+#         arr[i], arr[min_index] = arr[min_index], arr[i]
+#     return arr
 
 #=========================================================================
 # Insertion Sort
@@ -80,22 +82,24 @@ def merge_sort(arr):
 # Quick sort 
 def partition(array, low, high):
 
-  pivot = array[high]
-  i = low - 1
-  for j in range(low, high):
-    if array[j] <= pivot:
-      i = i + 1
-      (array[i], array[j]) = (array[j], array[i])
+    pivot = array[high]
+    i = low - 1
+    for j in range(low, high):
+        if array[j] <= pivot:
+            i = i + 1
+            (array[i], array[j]) = (array[j], array[i])
 
-  (array[i + 1], array[high]) = (array[high], array[i + 1])
+    (array[i + 1], array[high]) = (array[high], array[i + 1])
 
-  return i + 1
+    return i + 1
 
 def quick_sort(array, low, high):
-  if low < high:
-    pi = partition(array, low, high)
-    quick_sort(array, low, pi - 1)
-    quick_sort(array, pi + 1, high)
+    if low < high:
+        pi = partition(array, low, high)
+        quick_sort(array, low, pi - 1)
+        quick_sort(array, pi + 1, high)
+    return array
+
 
 
 #=========================================================================
@@ -158,6 +162,89 @@ def radix_sort(arr):
     while max_num // exp > 0:
         counting_sort(arr, exp)
         exp *= 10
+    return arr
 
+#=========================================================================
+# Quick Select
+def partition(arr, l, r): 
+	
+	x = arr[r] 
+	i = l 
+	for j in range(l, r): 
+		
+		if arr[j] <= x: 
+			arr[i], arr[j] = arr[j], arr[i] 
+			i += 1
+			
+	arr[i], arr[r] = arr[r], arr[i] 
+	return i 
 
+def quick_select(arr, l, r, k): 
+ 
+	if (k > 0 and k <= r - l + 1): 
+
+		index = partition(arr, l, r) 
+		if (index - l == k - 1): 
+			return arr[index] 
+
+		if (index - l > k - 1): 
+			return quick_select(arr, l, index - 1, k) 
+ 
+		return quick_select(arr, index + 1, r, 
+							k - index + l - 1) 
+	return -1
+
+#=========================================================================
+# Counting Sort
+ 
+def countingSort(array):
+    size = len(array)
+    max_element = max(array)
+    min_element = min(array)
+    range_of_elements = max_element - min_element + 1
+
+    output = [0] * size
+    count = [0] * range_of_elements
+    
+    
+    for i in range(0, size):                     # Store the count of each element in the count array
+        count[array[i] - min_element] += 1
+   
+    for i in range(1, range_of_elements):        # Store the cumulative count
+        count[i] += count[i - 1]
+                           
+    i = size - 1                                 # Find the index of each element of the original array in count array
+    while i >= 0:                                # place the elements in the output array
+        output[count[array[i] - min_element] - 1] = array[i]
+        count[array[i] - min_element] -= 1
+        i -= 1
+    
+    for i in range(0, size):                     # Copy the sorted elements into the original array
+        array[i] = output[i]
+    return array
+
+#==============================================================================
+# Bucket Sort
+def bucket_sort(array):
+    n = len(array)
+    float_bucket = []
+    int_bucket = []
+
+    # Separate floating-point numbers and integers into different buckets
+    for num in array:
+        if isinstance(num, float):
+            float_bucket.append(num)
+        else:
+            int_bucket.append(num)
+
+    # Sort the floating-point numbers (if any)
+    float_bucket.sort()
+
+    # Sort the integers (if any)
+    int_bucket.sort()
+
+    # Concatenate the sorted floating-point numbers and integers
+    sorted_array = float_bucket + int_bucket
+
+    return sorted_array
 
