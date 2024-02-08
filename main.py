@@ -124,10 +124,10 @@ class SortingApp:
         # array_values.extend([int(val.strip()) for val in input_values[1:] if int(val.strip()) < 0])
         
         self.array_temp = array_values
-        print(self.array_temp,array_values, self.k_value, len(array_values))
-        if self.k_value < 1 or self.k_value > len(array_values):
-            mb.showerror("Invalid Input", "Please enter a k value > 0 and less than length of array")
-            return None
+        if self.k_value:
+            if self.k_value < 1 or self.k_value > len(array_values):
+                mb.showerror("Invalid Input", "Please enter a k value > 0 and less than length of array")
+                return None
             
 
         
