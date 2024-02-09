@@ -14,7 +14,6 @@ class SortingApp:
         self.root = root
         self.root.title("Sorting Algorithm Analysis")
         self.k_value = None # for quick select algorithm
-        self.array_temp = []
        
         self.input_frame = ttk.Frame(root)  # Frame for Input Elements
         self.graph_frame = ttk.Frame(root)  # Frame for Bar Chart
@@ -52,10 +51,11 @@ class SortingApp:
 
         # Pack UI Elements in the input frame
         self.array_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
-        self.array_entry.grid(row=0, column=1, columnspan=5, padx=5, pady=5, sticky="we")
-        self.random_array_button.grid(row=0, column=6, columnspan=2, padx=5, pady=5, sticky="we")
+        self.array_entry.grid(row=0, column=1, columnspan=5, padx=5, pady=5, sticky="we")           # array input box
 
-        self.algorithm_label.grid(row=2, column=0, padx=5, pady=5, sticky="w")
+        self.random_array_button.grid(row=0, column=6, columnspan=2, padx=5, pady=5, sticky="we")   # random array generator button
+
+        self.algorithm_label.grid(row=2, column=0, padx=5, pady=5, sticky="w")                      # sorting algorithm checkboxes
         self.bubble_sort_checkbox.grid(row=3, column=0, padx=10, pady=5, sticky="w")
         self.counting_sort_checkbox.grid(row=3, column=1, padx=10, pady=5, sticky="w")
         self.insertion_sort_checkbox.grid(row=3, column=2, padx=40, pady=5, sticky="w")
@@ -100,6 +100,7 @@ class SortingApp:
         except ValueError:
             mb.showerror("Invalid Input", "Please enter a valid integer for the array size.")
     
+    # function to trigger popup for getting k_value prompt for quick selection sort
     def prompt_k_value(self):
         if self.quick_select_var.get() == 1:
             self.get_k_value()
@@ -107,7 +108,7 @@ class SortingApp:
     def get_k_value(self):
         try:
             self.k_value = sd.askinteger("Kth Value", "Enter the value of k for Quick Select:")
-            if self.k_value is None:
+            if self.k_value is None:                                # checks for cancel button pressed or not
                 return
             return self.k_value
         except ValueError:
@@ -116,22 +117,16 @@ class SortingApp:
 
     def run_algorithms(self):
         # Get user inputs
-
         array_values = [int(val.strip()) for val in self.array_entry.get().split(',')]
-
-        # input_values = self.array_entry.get().split(',')
-        # array_values = [int(input_values[0].strip())]  # Store the first value
-        # array_values.extend([int(val.strip()) for val in input_values[1:] if int(val.strip()) < 0])
         
-        self.array_temp = array_values
-        print(self.array_temp,array_values, self.k_value, len(array_values))
+        #check for k_value of quick selection sort that it is not less than 1 and greater than length of array
         if self.k_value < 1 or self.k_value > len(array_values):
             mb.showerror("Invalid Input", "Please enter a k value > 0 and less than length of array")
             return None
             
 
         
-        # Store selected algorithms
+        # Store selected algorithms check responses
         selected_algorithms = {
             'Bubble Sort': self.bubble_sort_var.get(),
             'Counting Sort': self.counting_sort_var.get(),
@@ -144,8 +139,8 @@ class SortingApp:
         }
 
 
-        algorithm_runtimes = {}
-        print(array_values)
+        algorithm_runtimes = {} # executes algorithms and stores there execution times
+        
         if selected_algorithms['Bubble Sort']:
             algorithm_runtimes['Bubble Sort'] = self.measure_runtime(bubble_sort, array_values.copy(), 0)
         if selected_algorithms['Counting Sort']:
@@ -163,7 +158,7 @@ class SortingApp:
         if selected_algorithms['Quick Select']:
             algorithm_runtimes['Quick Select'] = self.measure_runtime(quick_select, array_values.copy(),2)
 
-
+        # generates chart using execution time
         self.display_graph(algorithm_runtimes)
 
     def display_graph(self, algorithm_runtimes):
@@ -189,16 +184,18 @@ class SortingApp:
 
     def measure_runtime(self,sorting_function, array, flag):
         
-        start_time = datetime.now()
+        start_time = datetime.now() # before execution timestamp
+
         if flag == 1:
             x = sorting_function(array, 0, len(array) - 1)
         elif flag == 2:
             x = sorting_function(array, 0, len(array) - 1, self.k_value)
         else:
             x = sorting_function(array)
-        print(sorting_function,x)
-        end_time = datetime.now()
-        difference = (end_time - start_time).total_seconds()
+        
+        end_time = datetime.now()   # after execution timestamp
+        
+        difference = (end_time - start_time).total_seconds() # diffeerence tin time
         return [difference]
 
 if __name__ == "__main__":
