@@ -134,8 +134,9 @@ class SortingApp:
 
     def run_algorithms(self):
         # reading input from the ui and converting int to int and float to float
-        array_values = self.convert_to_numbers([val for val in self.array_entry.get().split(',')])
+        array_values = self.convert_to_numbers([val.strip() for val in self.array_entry.get().split(',')])
 
+        print(array_values)
         # input validation for int
         if not self.check_int(array_values):
             mb.showerror("Invalid Input", "Please enter a valid Integer for the Array!")
@@ -148,7 +149,6 @@ class SortingApp:
                 mb.showerror("Invalid Input", "Please enter a k value > 0 and less than length of array")
                 return None
             
-
         
         # Store selected algorithms check responses
         selected_algorithms = {
@@ -218,7 +218,7 @@ class SortingApp:
             x = sorting_function(array)
         
         end_time = datetime.now()   # after execution timestamp
-        
+        print(x, sorting_function)
         difference = (end_time - start_time).total_seconds() # diffeerence tin time
         return [difference]
 
