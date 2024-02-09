@@ -68,6 +68,7 @@ def merge_sort(arr):
 
 #=========================================================================
 # Quick sort 
+# helper function for quick sort
 def partition(array, low, high):
 
     pivot = array[high]
@@ -90,6 +91,8 @@ def quick_sort(array, low, high):
 
 #=========================================================================
 # Heap Sort
+
+# helper function for heap sort
 def heapify(arr, n, i):
     largest = i
     left = 2 * i + 1
@@ -118,7 +121,9 @@ def heap_sort(arr):
     return arr
 
 #=========================================================================
-#Radix Sort
+# Radix sort
+
+#helper function for radix sort
 def counting_sort(arr, exp):
     n = len(arr)
     output = [0] * n
@@ -152,16 +157,14 @@ def radix_sort(arr):
 
 #=========================================================================
 # Quick Select
+# helper function for quick selection sort
 def partition(arr, l, r): 
-	
 	x = arr[r] 
 	i = l 
 	for j in range(l, r): 
-		
 		if arr[j] <= x: 
 			arr[i], arr[j] = arr[j], arr[i] 
 			i += 1
-			
 	arr[i], arr[r] = arr[r], arr[i] 
 	return i 
 
@@ -216,21 +219,17 @@ def bucket_sort(array):
     float_bucket = []
     int_bucket = []
 
-    # Separate floating-point numbers and integers into different buckets
-    for num in array:
+    
+    for num in array:                           # Separate floating-point numbers and integers into different buckets
         if isinstance(num, float):
             float_bucket.append(num)
         else:
             int_bucket.append(num)
 
-    # Sort the floating-point numbers (if any)
-    float_bucket.sort()
-
-    # Sort the integers (if any)
-    int_bucket.sort()
-
-    # Concatenate the sorted floating-point numbers and integers
-    sorted_array = float_bucket + int_bucket
+    float_bucket.sort()                         # Sort the floating-point numbers (if any)
+    int_bucket.sort()                           # Sort the integers (if any)
+    
+    sorted_array = float_bucket + int_bucket    # Concatenate the sorted floating-point numbers and integers
 
     return sorted_array
 
