@@ -20,18 +20,6 @@ def bubble_sort(arr):
     return arr
 
 #=========================================================================
-# Selection Sort
-# def selection_sort(arr):
-#     n = len(arr)
-#     for i in range(n):
-#         min_index = i
-#         for j in range(i + 1, n):
-#             if arr[j] < arr[min_index]:
-#                 min_index = j
-#         arr[i], arr[min_index] = arr[min_index], arr[i]
-#     return arr
-
-#=========================================================================
 # Insertion Sort
 def insertion_sort(arr):
     n = len(arr)
@@ -100,8 +88,6 @@ def quick_sort(array, low, high):
         quick_sort(array, low, pi - 1)
         quick_sort(array, pi + 1, high)
     return array
-
-
 
 #=========================================================================
 # Heap Sort
