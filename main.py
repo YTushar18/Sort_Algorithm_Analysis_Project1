@@ -133,13 +133,20 @@ class SortingApp:
         return True
 
     def run_algorithms(self):
-        # Get user inputs
-        array_values = [int(val.strip()) for val in self.array_entry.get().split(',')]
+        # reading input from the ui and converting int to int and float to float
+        array_values = self.convert_to_numbers([val for val in self.array_entry.get().split(',')])
+
+        # input validation for int
+        if not self.check_int(array_values):
+            mb.showerror("Invalid Input", "Please enter a valid Integer for the Array!")
+
+        #input validation for k value for quick selection sort algorithm
         
         #check for k_value of quick selection sort that it is not less than 1 and greater than length of array
-        if self.k_value < 1 or self.k_value > len(array_values):
-            mb.showerror("Invalid Input", "Please enter a k value > 0 and less than length of array")
-            return None
+        if self.k_value:
+            if self.k_value < 1 or self.k_value > len(array_values):
+                mb.showerror("Invalid Input", "Please enter a k value > 0 and less than length of array")
+                return None
             
 
         
