@@ -88,10 +88,10 @@ class SortingApp:
 
             if size is None: # Check if the user pressed cancel
                 return
-            if size > 50 or size < 10:
+            if size > 100000 or size < 10:
                 mb.showerror("Invalid Input", "Please enter the size within the mentioned range!")
             
-            random_array = [random.randint(1, 100) for _ in range(size)] # Generate a random array of the specified size
+            random_array = [random.randint(1, 100000) for _ in range(size)] # Generate a random array of the specified size
 
             
             self.array_entry.delete(0, tk.END) # Fill the array entry with the generated array
@@ -136,10 +136,11 @@ class SortingApp:
         # reading input from the ui and converting int to int and float to float
         array_values = self.convert_to_numbers([val.strip() for val in self.array_entry.get().split(',')])
 
-        print(array_values)
+        # print(array_values)
         # input validation for int
         if not self.check_int(array_values):
             mb.showerror("Invalid Input", "Please enter a valid Integer for the Array!")
+            return None
 
         #input validation for k value for quick selection sort algorithm
         
@@ -186,6 +187,7 @@ class SortingApp:
         self.display_graph(algorithm_runtimes)
 
     def display_graph(self, algorithm_runtimes):
+        print(algorithm_runtimes)
         
         self.ax.clear() # Clear the existing graph
 
@@ -218,7 +220,7 @@ class SortingApp:
             x = sorting_function(array)
         
         end_time = datetime.now()   # after execution timestamp
-        print(x, sorting_function)
+        # print(x, sorting_function)
         difference = (end_time - start_time).total_seconds() # diffeerence tin time
         return [difference]
 
